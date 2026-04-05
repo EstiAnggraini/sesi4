@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Polimorfisme dan Abstraksi</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #f1f5f9, #dbeafe);
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      border-left: 5px solid #2563eb;
+      padding-left: 10px;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    hr {
+      margin: 50px 0;
+      border: none;
+      height: 1px;
+      background: #cbd5e1;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #cbd5e1;
+      font-size: 14px;
+      text-align: center;
+      color: #475569;
+    }
+
+    /* BUTTON */
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1e40af;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      position: relative;
+      background: white;
+      width: 90%;
+      max-width: 900px;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 22px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close:hover {
+      color: #2563eb;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    pre {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    /* Tabel Perbedaan extends vs implements  */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .comparison-table th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table td:first-child {
+      font-weight: 600;
+      background-color: #f0f4ff;
+      color: #1e293b;
+    }
+
+    .comparison-table td {
+      color: #1e293b;
+      background-color: white;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .badge-is-a {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #34d399;
+    }
+
+    .badge-can-do {
+      background: #fed7aa;
+      color: #92400e;
+      border: 1px solid #f97316;
+    }
+
+    .check {
+      color: #10b981;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .cross {
+      color: #ef4444;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .hint {
+      font-size: 0.7rem;
+      color: #6b7280;
+      display: block;
+      margin-top: 4px;
+    }
+
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #2563eb;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .info-card {
+      background: #e0f2fe;
+      border-left: 4px solid #0284c7;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Review Sesi 4</h1>
+    <p><b>Nama:</b> Azriel Miracle Yuandre</p>
+    <p><b>NIM:</b> 251410024</p>
+    <p><b>Kelas:</b> SI2A</p>
+
+    <div class="card">
+      <ul>
+        <li> Review Sesi 3 – Pewarisan
+            Inheritance: 
+            extends keyword
+            super() untuk panggil constructor parent
+            @override untuk override method</li>
+      </ul>
+
+      <pre>
+// Nama: Esti Anggraini
+// Nim: 251410031
+// Kelas: SI2A
+
+class Makhluk {
+  void bersuara() => print('...');
+}
+
+class KucingAnggora extends Makhluk {
+  @override
+  void bersuara() => print('Meong Meong');
+}
+
+void main() {
+  Makhluk mahluk = Makhluk();
+  KucingAnggora kucingAnggora = KucingAnggora();
+  
+  mahluk.bersuara(); // Output: ...
+  kucingAnggora.bersuara(); // Output: Meong Meong
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('41cc1cbe833a270f3ba3667dedb6377a')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Pengantar Polimorfisme</h3>
+      <p>Dart menyediakan beberapa mekanisme inisialisasi objek untuk berbagai kebutuhan arsitektur:</p>
+      <ol>
+        <li><b>Arti:</b>  "Banyak bentuk" (poly = banyak, morph = bentuk)</li>
+        <li><b>Konsep:</b> Objek dari subclass dapat diperlakukan sebagai objek dari superclass</li>
+        <li><b>Parameterized Constructor:</b> ClassName(this.param)</li>
+        <li><b>Contoh:</b> Semua Kucing , Anjing , Burung adalah Hewan</li>
+        <li><b> i.Compile-time polymorphism:</b> Method overloading (tidak didukung Dart)</li>
+        <li><b>ii. Runtime polymorphism:</b> Method overriding (didukung Dart)</li>
+      </ol>
+      <pre>
+        // Nama: Esti Anggraini
+        // Nim: 251410031
+        // Kelas: SI2A
+
+
+class BentukGeometri {
+void gambar() => print('Menggambar bentuk geometri');
+}
+class LingkaranBiru extends BentukGeometri {
+@override
+void gambar() => print('Menggambar lingkaran biru');
+}
+class PersegiPanjang extends BentukGeometri {
+@override
+void gambar() => print('Menggambar persegi panjang');
+}
+void main() {
+BentukGeometri bentukGeo1 = LingkaranBiru();  // Polimorfisme
+BentukGeometri bentukGeo2 = PersegiPanjang();    
+// Polimorfisme
+bentukGeo1.gambar();  // Output: Menggambar lingkaran biru
+bentukGeo2.gambar();  // Output: Menggambar persegi panjang
+
+}
+
+      </pre>
+       <button class="btn" onclick="openModal('64d31adb0bd4421a5b48a7b84766dfda')">
+        Lihat Kode
+      </button>
+    </div>
+
+<h2>  Manfaat Polimorfisme</h2>
+    <div class="card">
+      <ul>
+      <li>
+         1. Fleksibilitas: Kode dapat bekerja dengan berbagai tipe
+        2. Extensibility: Mudah menambah tipe baru
+        3. Code Reusability: Method umum di superclass
+        4. Maintainability: Perubahan mudah dikelola
+      </li> </ul>
+    </div>
+
+
+
+    
+
+    <h2>2.is dan as Operator</h2>
+    <div class="card">
+      <p>
+       <ul><li>
+        is : Mengecek tipe objek
+        as : Casting tipe objek
+       </li></ul>
+      </p>
+
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : SI2A
+
+class Transportasi {}
+
+class MobilBalap extends Transportasi {
+  void klaksonKencang() => print('Tin Tin Tin!');
+}
+
+void main() {
+  Transportasi t = MobilBalap();
+  
+  if (t is MobilBalap) {
+    t.klaksonKencang();
+  }
+  
+  (t as MobilBalap).klaksonKencang();
+  
+  (t as MobilBalap?)?.klaksonKencang();
+}
+
+  </pre>
+
+      <button class="btn" onclick="openModal('15c6cee8fbb2e9bf2de27f7faaa2d444')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2> Praktik 1 – Polimorfisme dengan List</h2>
+    <div class="card">
+    <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+      class HewanLaut {
+  void bersuara() => print('...');
+}
+
+class Lumba extends HewanLaut {
+  @override
+  void bersuara() => print('Cit Cit');
+}
+
+class Hiu extends HewanLaut {
+  @override
+  void bersuara() => print('Rawr Rawr');
+}
+
+class Paus extends HewanLaut {
+  @override
+  void bersuara() => print('Wooo Wooo');
+}
+
+void main() {
+  // Membuat list dengan berbagai objek subclass
+  List<HewanLaut> daftarHewanLaut = [
+    Lumba(),
+    Hiu(),
+    Paus(),
+    Lumba(),
+    Hiu(),
+  ];
+  
+  // Loop list dan panggil method bersuara()
+  print('Suara-suara hewan laut:');
+  for (var hewanLaut in daftarHewanLaut) {
+    hewanLaut.bersuara();
+  }
+}
+    </pre>
+  <button class="btn" onclick="openModal('87958f06e6ead274cc976e3913dda31d')">
+        Lihat Kode
+      </button>
+      
+    </div>
+
+    <h2> Pengantar Abstraksi</h2>
+    <div class="card">
+<pre>
+Konsep: Menyembunyikan detail implementasi, hanya menunjukkan
+fungsionalitas
+Tujuan:
+i. Fokus pada "apa" bukan "bagaimana"
+ii. Kontrak yang harus dipenuhi
+iii. Fleksibilitas implementasi
+</pre>
+ </div>
+
+    <h2>3.  Abstract Class</h2>
+    <div class="card">
+      <p>
+       Tidak bisa diinstansiasi langsung
+        Dapat memiliki method abstract (tanpa implementasi) dan concrete (dengan
+        implementasi)
+      </p>
+
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+
+abstract class AlatTransportasi {
+  String? nama;  // Field concrete
+  
+  void start();  // Method abstract
+  
+  void stop() {  // Method concrete
+    print('Alat transportasi berhenti');
+  }
+}
+
+class MobilListrik extends AlatTransportasi {
+  @override
+  void start() {
+    print('Mobil ${nama ?? 'tanpa nama'} menyala');
+  }
+  
+  // Optional: override method stop jika ingin perilaku berbeda
+  @override
+  void stop() {
+    print('Mobil ${nama ?? 'tanpa nama'} berhenti');
+  }
+}
+
+void main() {
+  MobilListrik mobilListrik1 = MobilListrik();
+  mobilListrik1.nama = 'Tesla';
+  mobilListrik1.start();  // Output: Mobil Tesla menyala
+  mobilListrik1.stop();   // Output: Mobil Tesla berhenti
+  
+  MobilListrik mobilListrik2 = MobilListrik();
+  mobilListrik2.start();  // Output: Mobil tanpa nama menyala
+  mobilListrik2.stop();   // Output: Mobil tanpa nama berhenti
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('ee643f115bd1e132a1774de9f6fe1ceb')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>4.Abstract Method</h2>
+    <div class="card">
+      <p>
+       <pre>
+  Method tanpa body (implementasi)
+  Harus di-override di subclass
+       </pre>
+      </p>
+
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+
+abstract class PeralatanMusik {
+  void mainkan();  // Abstract method
+  
+  void info() {    // Concrete method
+    print('Ini adalah peralatan musik');
+  }
+}
+
+class GitarElektrik extends PeralatanMusik {
+  @override
+  void mainkan() {
+    print('Jreng jreng listrik...');
+  }
+}
+
+void main() {
+  GitarElektrik gitarElektrik = GitarElektrik();
+  
+  gitarElektrik.mainkan();  // Output: Jreng jreng listrik...
+  gitarElektrik.info();     // Output: Ini adalah peralatan musik
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('70ae74d84992152c2f879540fb3d00c6')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>5. Interface di Dart</h2>
+    <div class="card">
+      <p>
+        <pre>
+  Fakta: sejak Dart 3.0 dart punya keyword 
+  interface
+  Cara: Semua interface class adalah implicit interface
+  Gunakan 
+  implements untuk mengimplementasi interface
+        </pre>
+      </p>
+
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : SI2A
+
+abstract interface class Terbang {
+  void terbang(); 
+}
+
+class Elang implements Terbang {
+  @override
+  void terbang() => print('Elang terbang tinggi sekali');
+}
+
+class Drone implements Terbang {
+  @override
+  void terbang() => print('Drone terbang stabil');
+}
+
+void main() {
+  Elang elang = Elang();
+  Drone drone = Drone();
+  
+  elang.terbang();   // Output: Elang terbang tinggi sekali
+  drone.terbang();  // Output: Drone terbang stabil
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('85559010d8033d30c41a40e85eb3a936')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>Perbedaan extends vs implements</h2>
+<div class="card">
+    <table class="comparison-table">
+    <thead>
+        <tr>
+            <th>Aspect</th>
+            <th>extends</th>
+            <th>implements</th>
+        </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+            <td>Hubungan</th>
+            <td><span class="badge badge-is-a">"is-a"</span> (adalah)</th>
+            <td><span class="badge badge-can-do">"can-do"</span> (bisa melakukan)</th>
+        </tr>
+       
+        <tr>
+            <td>Inheritance</th>
+            <td>Mewarisi implementasi <span class="check">✓</span></th>
+            <td>Hanya kontrak <span class="cross">✗</span></th>
+        </tr>
+        
+      
+        <tr>
+            <td>Method</th>
+            <td>Bisa concrete/abstract</th>
+            <td>Semua harus di-implement <span class="cross">✗</span></th>
+          </tr>
+      
+        <tr>
+            <td>Single/Multiple</th>
+            <td>Ya (single inheritance) <span class="check">✓</span></th>
+            <td>Banyak (multiple) <span class="check">✓</span></th>
+          </tr>
+      
+        <tr>
+            <td>Keyword</th>
+            <td><code style="background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:6px;">extends</code></th>
+            <td><code style="background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:6px;">implements</code></th>
+          </tr>
+
+        <tr>
+            <td>Contoh</th>
+            <td>
+                <code>class MobilListrik extends AlatTransportasi</code>
+                <span class="hint">MobilListrik IS-A AlatTransportasi</span>
+             </th>
+            <td>
+                <code>class Elang implements Terbang</code>
+                <span class="hint">Elang CAN-DO Terbang</span>
+             </th>
+          </tr>
+    </tbody>
+</table>
+</div>
+    
+    <h2>Static Members dan Method</h2>
+    <div class="card">
+      <ul>
+        <li>
+          Static members adalah properti atau method yang dimiliki oleh class itu
+          sendiri, bukan oleh objek class. Static member diakses langsung melalui
+          class name.
+          Properti dan method static sangat berguna untuk membuat utility class
+          atau menyimpan konstanta yang terkait dengan class, sehingga dapat diakses
+          langsung tanpa perlu membuat objek.
+        </li>
+      </ul>
+
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A 
+
+class KalkulatorUtils {
+static double phi = 3.14159;
+static int tambah(int a, int b) {
+return a + b;
+}
+}
+void main() {
+print('Nilai phi : ${KalkulatorUtils.phi}');
+print('Result : ${KalkulatorUtils.tambah(10, 20)}');
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('dec0523715d12ecda4212a847fbfd51f')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>Praktik 2- sistem pembayaran</h2>
+    <div class="card">
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A 
+
+abstract class MetodeTransaksi {
+  void bayar(double jumlah);
+}
+
+class KartuDebit implements MetodeTransaksi {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan Kartu Debit');
+  }
+}
+
+class DompetDigital implements MetodeTransaksi {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan Dompet Digital');
+  }
+}
+
+class TunaiRupiah implements MetodeTransaksi {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan Tunai Rupiah');
+  }
+}
+
+// Contoh penggunaan
+void main() {
+  List<MetodeTransaksi> listTransaksi = [
+    KartuDebit(),
+    DompetDigital(),
+    TunaiRupiah(),
+  ];
+  
+  for (var metode in listTransaksi) {
+    metode.bayar(250000);
+  }
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('a9d07d8a56d386459b17222dacbf6235')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2> Studi Kasus: Sistem Bentuk Geometri</h2>
+    <div class="card">
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+
+abstract class BentukDuaDimensi {
+  double hitungLuas();
+  double hitungKeliling();
+  
+  void info() {
+    print('Luas: ${hitungLuas()}, Keliling: ${hitungKeliling()}');
+  }
+}
+
+class PersegiEmpat implements BentukDuaDimensi {
+  double panjangSisi;
+  
+  PersegiEmpat(this.panjangSisi);
+  
+  @override
+  double hitungLuas() => panjangSisi * panjangSisi;
+  
+  @override
+  double hitungKeliling() => 4 * panjangSisi;
+  
+  @override
+  void info() {
+    print('Persegi dengan sisi $panjangSisi memiliki luas ${hitungLuas()} dan keliling ${hitungKeliling()}');
+  }
+}
+
+class LingkaranBundar implements BentukDuaDimensi {
+  double jariJari;
+  
+  LingkaranBundar(this.jariJari);
+  
+  @override
+  double hitungLuas() => 3.14159 * jariJari * jariJari;
+  
+  @override
+  double hitungKeliling() => 2 * 3.14159 * jariJari;
+  
+  @override
+  void info() {
+    print('Lingkaran dengan jari-jari $jariJari memiliki luas ${hitungLuas()} dan keliling ${hitungKeliling()}');
+  }
+}
+
+void main() {
+  PersegiEmpat persegiEmpat = PersegiEmpat(8);
+  LingkaranBundar lingkaranBundar = LingkaranBundar(10);
+  
+  persegiEmpat.info();
+  lingkaranBundar.info();
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('224b5f420bce43a752cf2a412fb7bd85')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>Latihan</h2>
+    <div class="card">
+      <h2>Jawaban Soal 1,2,3</h2>
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+
+// Soal 1, 2, 3
+abstract class Karyawan {
+  void bekerja();
+  
+  void istirahat() {
+    print('Sedang beristirahat...');
+  }
+  
+  void info() {
+    print('Ini adalah seorang karyawan');
+  }
+}
+
+class FrontendDev implements Karyawan {
+  String namaKaryawan;
+  String framework;
+  
+  FrontendDev(this.namaKaryawan, this.framework);
+  
+  @override
+  void bekerja() {
+    print('$namaKaryawan sedang coding dengan $framework');
+  }
+  
+  @override
+  void istirahat() {
+    print('$namaKaryawan minum kopi sambil ngoding');
+  }
+  
+  @override
+  void info() {
+    print('$namaKaryawan adalah seorang Frontend Developer');
+  }
+}
+
+class SpesialisJantung implements Karyawan {
+  String namaDokter;
+  String keahlian;
+  
+  SpesialisJantung(this.namaDokter, this.keahlian);
+  
+  @override
+  void bekerja() {
+    print('$namaDokter sedang memeriksa pasien $keahlian');
+  }
+  
+  @override
+  void istirahat() {
+    print('$namaDokter istirahat di ruang dokter');
+  }
+  
+  @override
+  void info() {
+    print('$namaDokter adalah seorang Dokter Spesialis $keahlian');
+  }
+}
+
+class PengajarMatematika implements Karyawan {
+  String namaGuru;
+  String mapel;
+  
+  PengajarMatematika(this.namaGuru, this.mapel);
+  
+  @override
+  void bekerja() {
+    print('$namaGuru sedang mengajar $mapel');
+  }
+  
+  @override
+  void istirahat() {
+    print('$namaGuru istirahat di ruang guru');
+  }
+  
+  @override
+  void info() {
+    print('$namaGuru adalah seorang Guru $mapel');
+  }
+}
+
+void main() {
+  print('========== SOAL 1,2,3 ==========');
+  
+  List<Karyawan> daftarKaryawan = [
+    FrontendDev('Rizky', 'React'),
+    SpesialisJantung('Sarah', 'Jantung'),
+    PengajarMatematika('Doni', 'Matematika'),
+  ];
+  
+  for (var pekerja in daftarKaryawan) {
+    pekerja.info();
+    pekerja.bekerja();
+    pekerja.istirahat();
+    print('---');
+  }
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('fa58abad32d57301a931ce6e012c6296')">
+        Lihat Kode
+      </button>
+
+<h2>Jawaban Soal 4</h2>
+<pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+  // Soal 4
+class Laptop {
+  String brand;
+  String chipset;
+  int memory;
+  
+  Laptop(this.brand, this.chipset, this.memory);
+  
+  void menyalakan() {
+    print('Laptop $brand menyala');
+  }
+  
+  void mematikan() {
+    print('Laptop $brand mati');
+  }
+  
+  void menjalankanAplikasi(String app) {
+    print('Menjalankan $app di laptop $brand');
+  }
+}
+
+class KameraProfesional {
+  int resolusiMP;
+  String tipeLensa;
+  
+  KameraProfesional(this.resolusiMP, this.tipeLensa);
+  
+  void mengambilGambar() {
+    print('Mengambil gambar dengan kamera $resolusiMP MP');
+  }
+  
+  void merekamVideo() {
+    print('Merekam video dengan lensa $tipeLensa');
+  }
+}
+
+class Handphone {
+  String nomorTelp;
+  String operator;
+  
+  Handphone(this.nomorTelp, this.operator);
+  
+  void telepon(String tujuan) {
+    print('Menelepon $tujuan dari nomor $nomorTelp');
+  }
+  
+  void kirimPesan(String tujuan, String isiPesan) {
+    print('Mengirim pesan ke $tujuan: $isiPesan');
+  }
+}
+
+class TabletModern implements Laptop, KameraProfesional, Handphone {
+  String deviceName;
+  String brand;
+  String chipset;
+  int memory;
+  int resolusiMP;
+  String tipeLensa;
+  String nomorTelp;
+  String operator;
+  
+  TabletModern({
+    required this.deviceName,
+    required this.brand,
+    required this.chipset,
+    required this.memory,
+    required this.resolusiMP,
+    required this.tipeLensa,
+    required this.nomorTelp,
+    required this.operator,
+  });
+  
+  @override
+  void menyalakan() {
+    print('Tablet $deviceName ($brand) menyala');
+  }
+  
+  @override
+  void mematikan() {
+    print('Tablet $deviceName ($brand) mati');
+  }
+  
+  @override
+  void menjalankanAplikasi(String app) {
+    print('Menjalankan $app di tablet $deviceName');
+  }
+  
+  @override
+  void mengambilGambar() {
+    print('Tablet $deviceName mengambil gambar dengan kamera $resolusiMP MP');
+  }
+  
+  @override
+  void merekamVideo() {
+    print('Tablet $deviceName merekam video dengan lensa $tipeLensa');
+  }
+  
+  @override
+  void telepon(String tujuan) {
+    print('Tablet $deviceName menelepon $tujuan dari nomor $nomorTelp ($operator)');
+  }
+  
+  @override
+  void kirimPesan(String tujuan, String isiPesan) {
+    print('Tablet $deviceName mengirim pesan ke $tujuan: $isiPesan');
+  }
+  
+  void sentuhLayar() {
+    print('Menyentuh layar tablet $deviceName');
+  }
+}
+
+void main() {
+  print('========== SOAL 4 ==========');
+  
+  TabletModern tabletModern = TabletModern(
+    deviceName: 'Galaxy Tab S9',
+    brand: 'Samsung',
+    chipset: 'Snapdragon 8 Gen 2',
+    memory: 12,
+    resolusiMP: 13,
+    tipeLensa: 'Ultrawide',
+    nomorTelp: '08987654321',
+    operator: 'Indosat',
+  );
+  
+  tabletModern.menyalakan();
+  tabletModern.menjalankanAplikasi('Lightroom');
+  tabletModern.mengambilGambar();
+  tabletModern.merekamVideo();
+  tabletModern.telepon('08987654322');
+  tabletModern.kirimPesan('08987654322', 'Halo dari tablet modern!');
+  tabletModern.sentuhLayar();
+  tabletModern.mematikan();
+}
+</pre>
+
+      <button class="btn" onclick="openModal('17dc112fbbf09455faf5544e1c8e62d6')">
+        Lihat Kode
+      </button>
+<h2>Jawaban Soal 5</h2>
+      <pre>
+        
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : Si2A
+        // Soal 5
+class MathHelper {
+  static int factorial(int n) {
+    if (n < 0) throw ArgumentError('Tidak bisa menghitung faktorial bilangan negatif');
+    if (n == 0 || n == 1) return 1;
+    int hasil = 1;
+    for (int i = 2; i <= n; i++) {
+      hasil *= i;
+    }
+    return hasil;
+  }
+  
+  static bool isPrima(int n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (int i = 3; i * i <= n; i += 2) {
+      if (n % i == 0) return false;
+    }
+    return true;
+  }
+  
+  static double roundToDecimals(double value, int decimalPlaces) {
+    double faktor = 1;
+    for (int i = 0; i < decimalPlaces; i++) {
+      faktor *= 10;
+    }
+    return (value * faktor).round() / faktor;
+  }
+  
+  static int randomInt(int min, int max) {
+    return min + (DateTime.now().millisecondsSinceEpoch % (max - min + 1));
+  }
+  
+  static double randomDouble(double min, double max) {
+    return min + (DateTime.now().millisecondsSinceEpoch % 10000) / 10000 * (max - min);
+  }
+  
+  static double rataRata(List<double> angka) {
+    if (angka.isEmpty) return 0;
+    double sum = 0;
+    for (var a in angka) {
+      sum += a;
+    }
+    return sum / angka.length;
+  }
+  
+  static double median(List<double> angka) {
+    if (angka.isEmpty) return 0;
+    List<double> sorted = List.from(angka)..sort();
+    int tengah = sorted.length ~/ 2;
+    if (sorted.length % 2 == 0) {
+      return (sorted[tengah - 1] + sorted[tengah]) / 2;
+    } else {
+      return sorted[tengah];
+    }
+  }
+}
+
+void main() {
+  print('========== SOAL 5 ==========');
+  
+  print('Factorial 6: ${MathHelper.factorial(6)}');
+  print('Factorial 8: ${MathHelper.factorial(8)}');
+  print('Apakah 19 prima? ${MathHelper.isPrima(19)}');
+  print('Apakah 21 prima? ${MathHelper.isPrima(21)}');
+  print('2.71828 ke 3 desimal: ${MathHelper.roundToDecimals(2.71828, 3)}');
+  print('Random Int (5-15): ${MathHelper.randomInt(5, 15)}');
+  print('Random Double (0-1): ${MathHelper.randomDouble(0, 1)}');
+  
+  List<double> angkaList = [65, 80, 95, 70, 85, 100];
+  print('List angka: $angkaList');
+  print('Rata-rata: ${MathHelper.rataRata(angkaList)}');
+  print('Median: ${MathHelper.median(angkaList)}');
+}
+      </pre>
+      <button class="btn" onclick="openModal('ad1d8ca83dd226040f10697bf0ccecb7')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <h2>Challange</h2>
+    <div class="card">
+      <pre>
+// Nama   : Esti Anggraini
+// Nim    : 251410031
+// Kelas  : SI2A
+
+// ==================== ABSTRACT CLASS ====================
+abstract class MusicPlayer {
+  String judul;
+  int durasi;
+  
+  MusicPlayer(this.judul, this.durasi);
+  
+  void play();
+  void stop();
+  void showInfo();
+  
+  void displayDuration() {
+    int menit = durasi ~/ 60;
+    int detik = durasi % 60;
+    print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
+  }
+}
+
+// ==================== INTERFACES ====================
+abstract interface class PlayableContent {
+  void play();
+  void resume();
+}
+
+abstract interface class PausableContent {
+  void pause();
+  void resumeFromPause();
+}
+
+// ==================== CLASS IMPLEMENTASI ====================
+class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
+  @override
+  String judul;
+  
+  @override
+  int durasi;
+  
+  String formatAudioTrack;
+  int kbps;
+  bool isPlaying = false;
+  bool isPaused = false;
+  
+  AudioTrack({
+    required this.judul,
+    required this.durasi,
+    required this.formatAudioTrack,
+    required this.kbps,
+  });
+  
+  @override
+  void play() {
+    if (isPaused) {
+      resume();
+    } else {
+      isPlaying = true;
+      isPaused = false;
+      print('🎵 Memutar audio: $judul ($formatAudioTrack, ${kbps}kbps)');
+    }
+  }
+  
+  @override
+  void resume() {
+    if (isPaused) {
+      isPlaying = true;
+      isPaused = false;
+      print('🎵 Melanjutkan audio: $judul');
+    }
+  }
+  
+  @override
+  void stop() {
+    isPlaying = false;
+    isPaused = false;
+    print('⏹️ Menghentikan audio: $judul');
+  }
+  
+  @override
+  void pause() {
+    if (isPlaying) {
+      isPlaying = false;
+      isPaused = true;
+      print('⏸️ Menjeda audio: $judul');
+    }
+  }
+  
+  @override
+  void resumeFromPause() {
+    if (isPaused) {
+      isPlaying = true;
+      isPaused = false;
+      print('▶️ Melanjutkan audio dari jeda: $judul');
+    }
+  }
+  
+  @override
+  void showInfo() {
+    print('═══════════════════════════════');
+    print('📻 AUDIO TRACK');
+    print('═══════════════════════════════');
+    print('Judul: $judul');
+    print('Format: $formatAudioTrack');
+    print('Kualitas: ${kbps}kbps');
+    displayDuration();
+    print('Status: ${isPlaying ? "Playing" : (isPaused ? "Paused" : "Stopped")}');
+    print('═══════════════════════════════');
+  }
+  
+  @override
+  void displayDuration() {
+    int menit = durasi ~/ 60;
+    int detik = durasi % 60;
+    print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
+  }
+  
+  void setVolume(int volume) {
+    print('🔊 Mengatur volume ke $volume%');
+  }
+  
+  void setEqualizerMode(String mode) {
+    print('🎚️ Mengatur equalizer ke mode: $mode');
+  }
+}
+
+class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
+  @override
+  String judul;
+  
+  @override
+  int durasi;
+  
+  String resolusiLayar;
+  String formatVideoTrack;
+  bool isPlaying = false;
+  bool isPaused = false;
+  int currentTime = 0;
+  
+  VideoTrack({
+    required this.judul,
+    required this.durasi,
+    required this.resolusiLayar,
+    required this.formatVideoTrack,
+  });
+  
+  @override
+  void play() {
+    if (isPaused) {
+      resume();
+    } else {
+      isPlaying = true;
+      isPaused = false;
+      print('🎬 Memutar video: $judul ($resolusiLayar, $formatVideoTrack)');
+    }
+  }
+  
+  @override
+  void resume() {
+    if (isPaused) {
+      isPlaying = true;
+      isPaused = false;
+      print('🎬 Melanjutkan video: $judul');
+    }
+  }
+  
+  @override
+  void stop() {
+    isPlaying = false;
+    isPaused = false;
+    currentTime = 0;
+    print('⏹️ Menghentikan video: $judul');
+  }
+  
+  @override
+  void pause() {
+    if (isPlaying) {
+      isPlaying = false;
+      isPaused = true;
+      print('⏸️ Menjeda video: $judul');
+    }
+  }
+  
+  @override
+  void resumeFromPause() {
+    if (isPaused) {
+      isPlaying = true;
+      isPaused = false;
+      print('▶️ Melanjutkan video dari jeda: $judul');
+    }
+  }
+  
+  @override
+  void showInfo() {
+    print('═══════════════════════════════');
+    print('📺 VIDEO TRACK');
+    print('═══════════════════════════════');
+    print('Judul: $judul');
+    print('Resolusi: $resolusiLayar');
+    print('Format: $formatVideoTrack');
+    displayDuration();
+    print('Status: ${isPlaying ? "Playing" : (isPaused ? "Paused" : "Stopped")}');
+    print('═══════════════════════════════');
+  }
+  
+  @override
+  void displayDuration() {
+    int menit = durasi ~/ 60;
+    int detik = durasi % 60;
+    print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
+  }
+  
+  void setQuality(String kualitas) {
+    print('📺 Mengubah kualitas video ke: $kualitas');
+  }
+  
+  void seekTo(int detik) {
+    if (detik >= 0 && detik <= durasi) {
+      currentTime = detik;
+      int menit = detik ~/ 60;
+      int second = detik % 60;
+      print('⏩ Lompat ke ${menit.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}');
+    } else {
+      print('❌ Waktu tidak valid!');
+    }
+  }
+  
+  void fullscreenMode() {
+    print('🖥️ Mode layar penuh aktif');
+  }
+}
+
+// ==================== MAIN PROGRAM ====================
+void main() {
+  print('═══════════════════════════════════════════════════════');
+  print('        MUSIC PLAYER SYSTEM DEMONSTRATION');
+  print('═══════════════════════════════════════════════════════\n');
+  
+  AudioTrack audioTrack = AudioTrack(
+    judul: 'Yesterday - The Beatles',
+    durasi: 125,
+    formatAudioTrack: 'FLAC',
+    kbps: 1411,
+  );
+  
+  VideoTrack videoTrack = VideoTrack(
+    judul: 'The Dark Knight Scene',
+    durasi: 480,
+    resolusiLayar: '1920x1080',
+    formatVideoTrack: 'MKV',
+  );
+  
+  print('══════════════ AUDIO PLAYER DEMO ══════════════\n');
+  audioTrack.showInfo();
+  print('');
+  audioTrack.play();
+  audioTrack.pause();
+  audioTrack.resumeFromPause();
+  audioTrack.setVolume(60);
+  audioTrack.setEqualizerMode('Jazz');
+  audioTrack.stop();
+  print('');
+  
+  print('══════════════ VIDEO PLAYER DEMO ══════════════\n');
+  videoTrack.showInfo();
+  print('');
+  videoTrack.play();
+  videoTrack.pause();
+  videoTrack.resumeFromPause();
+  videoTrack.seekTo(180);
+  videoTrack.setQuality('HD');
+  videoTrack.fullscreenMode();
+  videoTrack.stop();
+  print('');
+  
+  print('══════════ POLIMORFISME DEMO ══════════════════\n');
+  
+  List<MusicPlayer> daftarMedia = [
+    AudioTrack(
+      judul: 'Stairway to Heaven',
+      durasi: 482,
+      formatAudioTrack: 'WAV',
+      kbps: 2116,
+    ),
+    VideoTrack(
+      judul: 'Avengers Trailer',
+      durasi: 150,
+      resolusiLayar: '3840x2160',
+      formatVideoTrack: 'MP4',
+    ),
+    AudioTrack(
+      judul: 'Rolling in the Deep',
+      durasi: 218,
+      formatAudioTrack: 'AAC',
+      kbps: 320,
+    ),
+  ];
+  
+  for (var media in daftarMedia) {
+    print('Memutar: ${media.judul}');
+    media.displayDuration();
+    print('---');
+  }
+  
+  print('\n══════════ INTERFACE DEMO ══════════════════════\n');
+  
+  List<PlayableContent> playableList = [audioTrack, videoTrack];
+  
+  for (var item in playableList) {
+    print('Memulai pemutaran...');
+    item.play();
+    print('');
+  }
+  
+  print('══════════ PAUSABLE DEMO ══════════════════════\n');
+  
+  List<PausableContent> pausableList = [audioTrack, videoTrack];
+  
+  for (var item in pausableList) {
+    print('Menjeda pemutaran...');
+    item.pause();
+    print('Melanjutkan...');
+    item.resumeFromPause();
+    print('');
+  }
+  
+  print('═══════════════════════════════════════════════════════');
+  print('                    DEMO SELESAI');
+  print('═══════════════════════════════════════════════════════');
+}
+  </pre>
+
+      <button class="btn" onclick="openModal('98a848219e926cf5c8c48f362e81d5bb')">
+        Lihat Kode
+      </button>
+    </div>
+
+    <footer>
+      <h2>Kesimpulan</h2>
+      <pre>
+<p>
+  <pre>
+1. Polimorfisme: Objek child dapat diperlakukan sebagai parent
+2. Abstract class: Template dengan method abstract/concrete
+3. Interface: Kontrak yang harus diimplementasi
+4. multiple inheritance: mewarisi fungsi dari dua atau lebih hierarki class yang
+berbeda
+     </pre>
+        </p>
+    </footer>
+
+  </div>
+
+  <!-- MODAL DINAMIS (Cukup Satu Saja) -->
+  <div id="dynamicModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <iframe id="modalIframe" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    function openModal(gistId) {
+      const modal = document.getElementById("dynamicModal");
+      const iframe = document.getElementById("modalIframe");
+
+      // Load link secara otomatis saat diklik
+      iframe.src = `https://dartpad.dev/embed-dart.html?id=${gistId}&null_safety=true&run=true&theme=light`;
+      modal.style.display = "block";
+      document.body.style.overflow = "hidden"; // Biar ga bisa scroll saat modal buka
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("dynamicModal");
+      const iframe = document.getElementById("modalIframe");
+
+      modal.style.display = "none";
+      iframe.src = ""; // Bersihkan iframe biar ga berat
+      document.body.style.overflow = "auto";
+    }
+
+    // Klik di luar modal untuk tutup
+    window.onclick = function (event) {
+      const modal = document.getElementById("dynamicModal");
+      if (event.target == modal) closeModal();
+    }
+  </script>
+
+</body>
+
+</html>
