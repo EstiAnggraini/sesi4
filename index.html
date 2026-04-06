@@ -822,6 +822,10 @@ void main() {
 
     <h2>Latihan</h2>
     <div class="card">
+      <h2> 1.Buat abstract/interface class bekerja()Pekerja dengan method abstract/non abstract
+           2. Buat 3 class yang mengimplementasi: Programmer , Dokter, Guru
+           3. Buat list List<Pekerja> dan demonstrasikan polimorfisme
+      </h2>
       <h2>Jawaban Soal 1,2,3</h2>
       <pre>
 // Nama   : Esti Anggraini
@@ -833,7 +837,7 @@ abstract class Pekerja {
   void bekerja();
   
   void istirahat() {
-    print('Sedang istirahat...');
+    print('Sedang istirahat Kerja...');
   }
   
   void info() {
@@ -849,12 +853,12 @@ class Programmer implements Pekerja {
   
   @override
   void bekerja() {
-    print('$nama sedang coding dengan $bahasaPemrograman');
+    print('$nama sedang coding dengan $bahasaPemrograman'); // Fixed: removed 'Dart' suffix
   }
   
   @override
   void istirahat() {
-    print('$nama minum kopi sambil ngoding');
+    print('$nama minum Susu sambil ngoding');
   }
   
   @override
@@ -871,17 +875,17 @@ class Dokter implements Pekerja {
   
   @override
   void bekerja() {
-    print('$nama sedang memeriksa pasien $spesialis');
+    print('$nama sedang memeriksa pasien Kelas1 $spesialis');
   }
   
   @override
   void istirahat() {
-    print('$nama istirahat di ruang dokter');
+    print('$nama istirahat di ruang dokter Dkk');
   }
   
   @override
   void info() {
-    print('$nama adalah seorang Dokter $spesialis');
+    print('$nama adalah seorang Dokter 1 $spesialis');
   }
 }
 
@@ -893,17 +897,17 @@ class Guru implements Pekerja {
   
   @override
   void bekerja() {
-    print('$nama sedang mengajar $mataPelajaran');
+    print('$nama sedang mengajar Kelas $mataPelajaran');
   }
   
   @override
   void istirahat() {
-    print('$nama istirahat di ruang guru');
+    print('$nama istirahat di ruang guru 3');
   }
   
   @override
   void info() {
-    print('$nama adalah seorang Guru $mataPelajaran');
+    print('$nama adalah seorang Guru Magister $mataPelajaran');
   }
 }
 
@@ -911,9 +915,9 @@ void main() {
   print('========== SOAL 1,2,3 ==========');
   
   List<Pekerja> daftarPekerja = [
-    Programmer('Ciya', 'Dart'),
-    Dokter('Mira', 'Jantung'),
-    Guru('Gaara', 'Matematika'),
+    Programmer('Gojo', 'Dart'),
+    Dokter('Sukuna', 'Jantung'),
+    Guru('Boruto', 'Matematika'),
   ];
   
   for (var pekerja in daftarPekerja) {
@@ -928,152 +932,153 @@ void main() {
       <button class="btn" onclick="openModal('ac6e82bc89032de7f1f6084d70f40928')">
         Lihat Kode
       </button>
-
+<h2> buat class "Tablet" (Mewarisi komputer,Kamera dan Telepon)</h2>
 <h2>Jawaban Soal 4</h2>
 <pre>
 // Nama   : Esti Anggraini
 // Nim    : 251410031
 // Kelas  : Si2A
-  // Soal 4
+ // Kelas Komputer
 class Komputer {
-  String merk;
   String processor;
   int ram;
-  
-  Komputer(this.merk, this.processor, this.ram);
-  
-  void menyalakan() {
-    print('Komputer $merk menyala');
+  int storage;
+
+  Komputer(this.processor, this.ram, this.storage);
+
+  void boot() {
+    print('Komputer booting...');
   }
-  
-  void mematikan() {
-    print('Komputer $merk mati');
+
+  void shutdown() {
+    print('Komputer shutdown.');
   }
-  
-  void menjalankanProgram(String program) {
-    print('Menjalankan $program di komputer $merk');
+
+  void displaySpecs() {
+    print('Processor: $processor, RAM: ${ram}GB, Storage: ${storage}GB');
   }
 }
 
-class Kamera {
-  int megapixel;
-  String lensa;
-  
-  Kamera(this.megapixel, this.lensa);
-  
-  void mengambilFoto() {
-    print('Mengambil foto dengan kamera $megapixel MP');
+// Interface/Mixin Kamera
+mixin Kamera {
+  void takePhoto() {
+    print('Mengambil foto menggunakan kamera tablet.');
   }
-  
-  void merekamVideo() {
-    print('Merekam video dengan lensa $lensa');
+
+  void recordVideo() {
+    print('Merekam video menggunakan kamera tablet.');
   }
 }
 
-class Telepon {
-  String nomor;
-  String provider;
-  
-  Telepon(this.nomor, this.provider);
-  
-  void menelepon(String tujuan) {
-    print('Menelepon $tujuan dari nomor $nomor');
+// Interface/Mixin Telepon
+mixin Telepon {
+  void makeCall(String number) {
+    print('Tablet melakukan panggilan ke $number');
   }
-  
-  void mengirimPesan(String tujuan, String pesan) {
-    print('Mengirim pesan ke $tujuan: $pesan');
+
+  void receiveCall(String number) {
+    print('Menerima panggilan dari $number');
   }
 }
 
-class Tablet implements Komputer, Kamera, Telepon {
-  String nama;
-  String merk;
-  String processor;
-  int ram;
-  int megapixel;
-  String lensa;
-  String nomor;
-  String provider;
-  
-  Tablet({
-    required this.nama,
-    required this.merk,
-    required this.processor,
-    required this.ram,
-    required this.megapixel,
-    required this.lensa,
-    required this.nomor,
-    required this.provider,
-  });
-  
+// Kelas Tablet mewarisi Komputer dan menggunakan mixin Kamera & Telepon
+class Tablet extends Komputer with Kamera, Telepon {
+  bool hasStylus;
+  String? cellularNetwork;
+
+  Tablet(String processor, int ram, int storage, this.hasStylus, this.cellularNetwork)
+      : super(processor, ram, storage);
+
   @override
-  void menyalakan() {
-    print('Tablet $nama ($merk) menyala');
+  void makeCall(String number) {
+    if (cellularNetwork != null) {
+      print('Tablet melakukan panggilan ke $number via $cellularNetwork');
+    } else {
+      print('Tablet tidak mendukung panggilan suara (WiFi only). Gunakan aplikasi VoIP.');
+    }
   }
-  
+
   @override
-  void mematikan() {
-    print('Tablet $nama ($merk) mati');
+  void receiveCall(String number) {
+    if (cellularNetwork != null) {
+      print('Menerima panggilan dari $number');
+    } else {
+      print('Tablet tidak bisa menerima panggilan seluler.');
+    }
   }
-  
+
+  void useStylus() {
+    if (hasStylus) {
+      print('Menggunakan stylus untuk menulis di layar.');
+    } else {
+      print('Tablet ini tidak dilengkapi stylus.');
+    }
+  }
+
+  void enableCellular() {
+    if (cellularNetwork != null) {
+      print('Mode seluler diaktifkan. Jaringan: $cellularNetwork');
+    } else {
+      print('Tablet ini tidak memiliki modem seluler.');
+    }
+  }
+
   @override
-  void menjalankanProgram(String program) {
-    print('Menjalankan $program di tablet $nama');
-  }
-  
-  @override
-  void mengambilFoto() {
-    print('Tablet $nama mengambil foto dengan kamera $megapixel MP');
-  }
-  
-  @override
-  void merekamVideo() {
-    print('Tablet $nama merekam video dengan lensa $lensa');
-  }
-  
-  @override
-  void menelepon(String tujuan) {
-    print('Tablet $nama menelepon $tujuan dari nomor $nomor ($provider)');
-  }
-  
-  @override
-  void mengirimPesan(String tujuan, String pesan) {
-    print('Tablet $nama mengirim pesan ke $tujuan: $pesan');
-  }
-  
-  void sentuhLayar() {
-    print('Menyentuh layar tablet $nama');
+  void displaySpecs() {
+    super.displaySpecs();
+    print('Stylus: ${hasStylus ? "Ya" : "Tidak"}');
+    print('Jaringan: ${cellularNetwork ?? "WiFi only"}');
   }
 }
 
 void main() {
-  print('========== SOAL 4 ==========');
+  print('========== TABLET 1 (Dengan Seluler) ==========\n');
   
-  Tablet tablet = Tablet(
-    nama: 'iPad Pro Edisi 4',
-    merk: 'Apple',
-    processor: 'M6',
-    ram: 16,
-    megapixel: 12,
-    lensa: 'Wide',
-    nomor: '081274863',
-    provider: 'Indosat',
-  );
+  // Tablet dengan panggilan seluler
+  Tablet iPad = Tablet('Apple M2', 8, 256, true, '5G');
+  iPad.displaySpecs();
+  iPad.boot();
+  iPad.takePhoto();
+  iPad.recordVideo();
+  iPad.makeCall('08123456789');
+  iPad.receiveCall('08987654321');
+  iPad.useStylus();
+  iPad.enableCellular();
+  iPad.shutdown();
+
+  print('\n========== TABLET 2 (WiFi Only) ==========\n');
+
+  // Tablet WiFi only
+  Tablet samsungTab = Tablet('Snapdragon 8 Gen 2', 8, 128, false, null);
+  samsungTab.displaySpecs();
+  samsungTab.boot();
+  samsungTab.takePhoto();
+  samsungTab.recordVideo();
+  samsungTab.makeCall('08987654321');
+  samsungTab.receiveCall('08123456789');
+  samsungTab.useStylus();
+  samsungTab.enableCellular();
+  samsungTab.shutdown();
   
-  tablet.menyalakan();
-  tablet.menjalankanProgram('Github');
-  tablet.mengambilFoto();
-  tablet.merekamVideo();
-  tablet.menelepon('0812345677');
-  tablet.mengirimPesan('0812345677', 'Halo dari tablet!');
-  tablet.sentuhLayar();
-  tablet.mematikan();
+  print('\n========== DEMONSTRASI POLIMORFISME ==========\n');
+  
+  // Demonstrasi polimorfisme
+  List<Komputer> komputerList = [iPad, samsungTab];
+  for (var komputer in komputerList) {
+    komputer.displaySpecs();
+    print('---');
+  }
 }
 </pre>
 
       <button class="btn" onclick="openModal('eef42d6be4c991185dc25ae97ec65d7b')">
         Lihat Kode
       </button>
+
+      <h2>%. Buat class MathUtils dengan static methods untuk factorial, cek bilangan
+prima, Membulatkan double ke desimal tertentu, Menghasilkan bilangan acak
+integer dan double dalam range [min, max], Menghitung rata-rata dari list angka,
+dan Menghitung median dari list angka</h2>
 <h2>Jawaban Soal 5</h2>
       <pre>
         
@@ -1081,79 +1086,194 @@ void main() {
 // Nim    : 251410031
 // Kelas  : Si2A
         // Soal 5
+import 'dart:math';
+
 class MathUtils {
+  // 1. Menghitung faktorial
   static int factorial(int n) {
-    if (n < 0) throw ArgumentError('Tidak bisa menghitung faktorial bilangan negatif');
-    if (n == 0 || n == 1) return 1;
-    int hasil = 1;
-    for (int i = 2; i <= n; i++) {
-      hasil *= i;
+    if (n < 0) {
+      throw ArgumentError('Faktorial tidak terdefinisi untuk bilangan negatif');
     }
-    return hasil;
+    if (n == 0 || n == 1) return 1;
+    
+    int result = 1;
+    for (int i = 2; i <= n; i++) {
+      result *= i;
+    }
+    return result;
   }
   
-  static bool isPrima(int n) {
-    if (n <= 1) return false;
-    if (n == 2) return true;
-    if (n % 2 == 0) return false;
-    for (int i = 3; i * i <= n; i += 2) {
-      if (n % i == 0) return false;
+  // 2. Cek bilangan prima
+  static bool isPrime(int number) {
+    if (number <= 1) return false;
+    if (number == 2) return true;
+    if (number % 2 == 0) return false;
+    
+    int sqrtNum = (sqrt(number)).toInt();
+    for (int i = 3; i <= sqrtNum; i += 2) {
+      if (number % i == 0) return false;
     }
     return true;
   }
   
-  static double roundToDecimal(double value, int decimalPlaces) {
-    double faktor = 1;
-    for (int i = 0; i < decimalPlaces; i++) {
-      faktor *= 10;
+  // 3. Membulatkan double ke desimal tertentu
+  static double roundToDecimal(double value, int decimals) {
+    if (decimals < 0) {
+      throw ArgumentError('Jumlah desimal tidak boleh negatif');
     }
-    return (value * faktor).round() / faktor;
+    double factor = pow(10, decimals).toDouble();
+    return (value * factor).round() / factor;
   }
   
+  // 4. Menghasilkan bilangan acak integer dalam range [min, max]
   static int randomInt(int min, int max) {
-    return min + (DateTime.now().millisecondsSinceEpoch % (max - min + 1));
-  }
-  
-  static double randomDouble(double min, double max) {
-    return min + (DateTime.now().millisecondsSinceEpoch % 10000) / 10000 * (max - min);
-  }
-  
-  static double rataRata(List<double> angka) {
-    if (angka.isEmpty) return 0;
-    double sum = 0;
-    for (var a in angka) {
-      sum += a;
+    if (min > max) {
+      throw ArgumentError('min harus kurang dari atau sama dengan max');
     }
-    return sum / angka.length;
+    final random = Random();
+    return min + random.nextInt(max - min + 1);
   }
   
-  static double median(List<double> angka) {
-    if (angka.isEmpty) return 0;
-    List<double> sorted = List.from(angka)..sort();
-    int tengah = sorted.length ~/ 2;
-    if (sorted.length % 2 == 0) {
-      return (sorted[tengah - 1] + sorted[tengah]) / 2;
+  // 5. Menghasilkan bilangan acak double dalam range [min, max]
+  static double randomDouble(double min, double max) {
+    if (min > max) {
+      throw ArgumentError('min harus kurang dari atau sama dengan max');
+    }
+    final random = Random();
+    return min + random.nextDouble() * (max - min);
+  }
+  
+  // 6. Menghitung rata-rata dari list angka
+  static double mean(List<num> numbers) {
+    if (numbers.isEmpty) {
+      throw ArgumentError('List tidak boleh kosong');
+    }
+    double sum = 0;
+    for (var num in numbers) {
+      sum += num.toDouble();
+    }
+    return sum / numbers.length;
+  }
+  
+  // 7. Menghitung median dari list angka
+  static double median(List<num> numbers) {
+    if (numbers.isEmpty) {
+      throw ArgumentError('List tidak boleh kosong');
+    }
+    
+    List<double> sorted = numbers.map((e) => e.toDouble()).toList();
+    sorted.sort();
+    int length = sorted.length;
+    
+    if (length % 2 == 0) {
+      // Jika genap, ambil rata-rata dua nilai tengah
+      return (sorted[length ~/ 2 - 1] + sorted[length ~/ 2]) / 2;
     } else {
-      return sorted[tengah];
+      // Jika ganjil, ambil nilai tengah
+      return sorted[length ~/ 2];
     }
   }
 }
 
 void main() {
-  print('========== SOAL 5 ==========');
+  print('========== MATH UTILS DEMONSTRATION ==========\n');
   
-  print('Factorial 6: ${MathUtils.factorial(6)}');
-  print('Factorial 4: ${MathUtils.factorial(4)}');
-  print('Apakah 13 prima? ${MathUtils.isPrima(13)}');
-  print('Apakah 24 prima? ${MathUtils.isPrima(24)}');
-  print('2.71828 ke 3 desimal: ${MathUtils.roundToDecimal(2.71828, 3)}');
-  print('Random Int (5-15): ${MathUtils.randomInt(5, 15)}');
-  print('Random Double (2-5): ${MathUtils.randomDouble(2, 5)}');
+  // 1. Faktorial
+  print('1. FAKTORIAL');
+  print('   factorial(5) = ${MathUtils.factorial(5)}');
+  print('   factorial(0) = ${MathUtils.factorial(0)}');
+  print('   factorial(10) = ${MathUtils.factorial(10)}');
+  print('');
   
-  List<double> nilai = [60, 75, 88, 92, 77, 83, 69];
-  print('List nilai: $nilai');
-  print('Rata-rata: ${MathUtils.rataRata(nilai)}');
-  print('Median: ${MathUtils.median(nilai)}');
+  // 2. Cek Bilangan Prima
+  print('2. CEK BILANGAN PRIMA');
+  print('   isPrime(7) = ${MathUtils.isPrime(7)}');
+  print('   isPrime(10) = ${MathUtils.isPrime(10)}');
+  print('   isPrime(17) = ${MathUtils.isPrime(17)}');
+  print('   isPrime(1) = ${MathUtils.isPrime(1)}');
+  print('');
+  
+  // 3. Pembulatan Double
+  print('3. PEMBULATAN DOUBLE');
+  print('   roundToDecimal(3.14159, 2) = ${MathUtils.roundToDecimal(3.14159, 2)}');
+  print('   roundToDecimal(2.71828, 3) = ${MathUtils.roundToDecimal(2.71828, 3)}');
+  print('   roundToDecimal(1.23456789, 4) = ${MathUtils.roundToDecimal(1.23456789, 4)}');
+  print('');
+  
+  // 4. Bilangan Acak Integer
+  print('4. BILANGAN ACAK INTEGER');
+  print('   randomInt(1, 10) = ${MathUtils.randomInt(1, 10)}');
+  print('   randomInt(1, 10) = ${MathUtils.randomInt(1, 10)}');
+  print('   randomInt(1, 10) = ${MathUtils.randomInt(1, 10)}');
+  print('');
+  
+  // 5. Bilangan Acak Double
+  print('5. BILANGAN ACAK DOUBLE');
+  print('   randomDouble(0.0, 1.0) = ${MathUtils.randomDouble(0.0, 1.0).toStringAsFixed(4)}');
+  print('   randomDouble(5.0, 10.0) = ${MathUtils.randomDouble(5.0, 10.0).toStringAsFixed(4)}');
+  print('   randomDouble(-5.0, 5.0) = ${MathUtils.randomDouble(-5.0, 5.0).toStringAsFixed(4)}');
+  print('');
+  
+  // 6. Rata-rata (Mean)
+  print('6. RATA-RATA (MEAN)');
+  List<num> data1 = [10, 20, 30, 40, 50];
+  List<num> data2 = [1.5, 2.5, 3.5, 4.5];
+  List<num> data3 = [7, 12, 9, 15, 21, 14];
+  print('   data1: $data1');
+  print('   mean = ${MathUtils.mean(data1).toStringAsFixed(2)}');
+  print('   data2: $data2');
+  print('   mean = ${MathUtils.mean(data2).toStringAsFixed(2)}');
+  print('   data3: $data3');
+  print('   mean = ${MathUtils.mean(data3).toStringAsFixed(2)}');
+  print('');
+  
+  // 7. Median
+  print('7. MEDIAN');
+  List<num> data4 = [10, 20, 30, 40, 50];
+  List<num> data5 = [10, 20, 30, 40];
+  List<num> data6 = [7, 3, 9, 1, 5, 11, 13, 15];
+  List<num> data7 = [2.5, 1.5, 3.5, 4.5];
+  
+  print('   data4: $data4 (ganjil)');
+  print('   median = ${MathUtils.median(data4)}');
+  print('   data5: $data5 (genap)');
+  print('   median = ${MathUtils.median(data5)}');
+  print('   data6: $data6 (tidak terurut)');
+  print('   median = ${MathUtils.median(data6)}');
+  print('   data7: $data7 (double)');
+  print('   median = ${MathUtils.median(data7)}');
+  print('');
+  
+  // Demonstrasi Error Handling
+  print('8. ERROR HANDLING DEMONSTRATION');
+  try {
+    print('   Mencoba faktorial(-5):');
+    MathUtils.factorial(-5);
+  } catch (e) {
+    print('   Error: $e');
+  }
+  
+  try {
+    print('   Mencoba mean([]):');
+    MathUtils.mean([]);
+  } catch (e) {
+    print('   Error: $e');
+  }
+  
+  print('\n========== PENGGUNAAN LANJUTAN ==========\n');
+  
+  // Contoh penggunaan praktis
+  print('Contoh: Membangkitkan 5 bilangan acak antara 1-100 dan menghitung statistiknya');
+  List<num> randomNumbers = [];
+  for (int i = 0; i < 5; i++) {
+    randomNumbers.add(MathUtils.randomInt(1, 100));
+  }
+  print('Bilangan acak: $randomNumbers');
+  print('Rata-rata: ${MathUtils.mean(randomNumbers).toStringAsFixed(2)}');
+  print('Median: ${MathUtils.median(randomNumbers)}');
+  print('Apakah 7 prima? ${MathUtils.isPrime(7)}');
+  print('10! = ${MathUtils.factorial(10)}');
+  print('PI dibulatkan 3 desimal: ${MathUtils.roundToDecimal(pi, 3)}');
 }
       </pre>
       <button class="btn" onclick="openModal('b362d4104e7b14f54e93ecaf545f854e')">
