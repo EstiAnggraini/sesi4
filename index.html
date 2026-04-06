@@ -829,94 +829,94 @@ void main() {
 // Kelas  : Si2A
 
 // Soal 1, 2, 3
-abstract class Karyawan {
+abstract class Pekerja {
   void bekerja();
   
   void istirahat() {
-    print('Sedang beristirahat...');
+    print('Sedang istirahat...');
   }
   
   void info() {
-    print('Ini adalah seorang karyawan');
+    print('Ini adalah seorang pekerja');
   }
 }
 
-class FrontendDev implements Karyawan {
-  String namaKaryawan;
-  String framework;
+class Programmer implements Pekerja {
+  String nama;
+  String bahasaPemrograman;
   
-  FrontendDev(this.namaKaryawan, this.framework);
+  Programmer(this.nama, this.bahasaPemrograman);
   
   @override
   void bekerja() {
-    print('$namaKaryawan sedang coding dengan $framework');
+    print('$nama sedang coding dengan $bahasaPemrograman');
   }
   
   @override
   void istirahat() {
-    print('$namaKaryawan minum kopi sambil ngoding');
+    print('$nama minum kopi sambil ngoding');
   }
   
   @override
   void info() {
-    print('$namaKaryawan adalah seorang Frontend Developer');
+    print('$nama adalah seorang Programmer');
   }
 }
 
-class SpesialisJantung implements Karyawan {
-  String namaDokter;
-  String keahlian;
+class Dokter implements Pekerja {
+  String nama;
+  String spesialis;
   
-  SpesialisJantung(this.namaDokter, this.keahlian);
+  Dokter(this.nama, this.spesialis);
   
   @override
   void bekerja() {
-    print('$namaDokter sedang memeriksa pasien $keahlian');
+    print('$nama sedang memeriksa pasien $spesialis');
   }
   
   @override
   void istirahat() {
-    print('$namaDokter istirahat di ruang dokter');
+    print('$nama istirahat di ruang dokter');
   }
   
   @override
   void info() {
-    print('$namaDokter adalah seorang Dokter Spesialis $keahlian');
+    print('$nama adalah seorang Dokter $spesialis');
   }
 }
 
-class PengajarMatematika implements Karyawan {
-  String namaGuru;
-  String mapel;
+class Guru implements Pekerja {
+  String nama;
+  String mataPelajaran;
   
-  PengajarMatematika(this.namaGuru, this.mapel);
+  Guru(this.nama, this.mataPelajaran);
   
   @override
   void bekerja() {
-    print('$namaGuru sedang mengajar $mapel');
+    print('$nama sedang mengajar $mataPelajaran');
   }
   
   @override
   void istirahat() {
-    print('$namaGuru istirahat di ruang guru');
+    print('$nama istirahat di ruang guru');
   }
   
   @override
   void info() {
-    print('$namaGuru adalah seorang Guru $mapel');
+    print('$nama adalah seorang Guru $mataPelajaran');
   }
 }
 
 void main() {
   print('========== SOAL 1,2,3 ==========');
   
-  List<Karyawan> daftarKaryawan = [
-    FrontendDev('Rizky', 'React'),
-    SpesialisJantung('Sarah', 'Jantung'),
-    PengajarMatematika('Doni', 'Matematika'),
+  List<Pekerja> daftarPekerja = [
+    Programmer('Ciya', 'Dart'),
+    Dokter('Mira', 'Jantung'),
+    Guru('Gaara', 'Matematika'),
   ];
   
-  for (var pekerja in daftarKaryawan) {
+  for (var pekerja in daftarPekerja) {
     pekerja.info();
     pekerja.bekerja();
     pekerja.istirahat();
@@ -935,139 +935,139 @@ void main() {
 // Nim    : 251410031
 // Kelas  : Si2A
   // Soal 4
-class Laptop {
-  String brand;
-  String chipset;
-  int memory;
+class Komputer {
+  String merk;
+  String processor;
+  int ram;
   
-  Laptop(this.brand, this.chipset, this.memory);
+  Komputer(this.merk, this.processor, this.ram);
   
   void menyalakan() {
-    print('Laptop $brand menyala');
+    print('Komputer $merk menyala');
   }
   
   void mematikan() {
-    print('Laptop $brand mati');
+    print('Komputer $merk mati');
   }
   
-  void menjalankanAplikasi(String app) {
-    print('Menjalankan $app di laptop $brand');
+  void menjalankanProgram(String program) {
+    print('Menjalankan $program di komputer $merk');
   }
 }
 
-class KameraProfesional {
-  int resolusiMP;
-  String tipeLensa;
+class Kamera {
+  int megapixel;
+  String lensa;
   
-  KameraProfesional(this.resolusiMP, this.tipeLensa);
+  Kamera(this.megapixel, this.lensa);
   
-  void mengambilGambar() {
-    print('Mengambil gambar dengan kamera $resolusiMP MP');
+  void mengambilFoto() {
+    print('Mengambil foto dengan kamera $megapixel MP');
   }
   
   void merekamVideo() {
-    print('Merekam video dengan lensa $tipeLensa');
+    print('Merekam video dengan lensa $lensa');
   }
 }
 
-class Handphone {
-  String nomorTelp;
-  String operator;
+class Telepon {
+  String nomor;
+  String provider;
   
-  Handphone(this.nomorTelp, this.operator);
+  Telepon(this.nomor, this.provider);
   
-  void telepon(String tujuan) {
-    print('Menelepon $tujuan dari nomor $nomorTelp');
+  void menelepon(String tujuan) {
+    print('Menelepon $tujuan dari nomor $nomor');
   }
   
-  void kirimPesan(String tujuan, String isiPesan) {
-    print('Mengirim pesan ke $tujuan: $isiPesan');
+  void mengirimPesan(String tujuan, String pesan) {
+    print('Mengirim pesan ke $tujuan: $pesan');
   }
 }
 
-class TabletModern implements Laptop, KameraProfesional, Handphone {
-  String deviceName;
-  String brand;
-  String chipset;
-  int memory;
-  int resolusiMP;
-  String tipeLensa;
-  String nomorTelp;
-  String operator;
+class Tablet implements Komputer, Kamera, Telepon {
+  String nama;
+  String merk;
+  String processor;
+  int ram;
+  int megapixel;
+  String lensa;
+  String nomor;
+  String provider;
   
-  TabletModern({
-    required this.deviceName,
-    required this.brand,
-    required this.chipset,
-    required this.memory,
-    required this.resolusiMP,
-    required this.tipeLensa,
-    required this.nomorTelp,
-    required this.operator,
+  Tablet({
+    required this.nama,
+    required this.merk,
+    required this.processor,
+    required this.ram,
+    required this.megapixel,
+    required this.lensa,
+    required this.nomor,
+    required this.provider,
   });
   
   @override
   void menyalakan() {
-    print('Tablet $deviceName ($brand) menyala');
+    print('Tablet $nama ($merk) menyala');
   }
   
   @override
   void mematikan() {
-    print('Tablet $deviceName ($brand) mati');
+    print('Tablet $nama ($merk) mati');
   }
   
   @override
-  void menjalankanAplikasi(String app) {
-    print('Menjalankan $app di tablet $deviceName');
+  void menjalankanProgram(String program) {
+    print('Menjalankan $program di tablet $nama');
   }
   
   @override
-  void mengambilGambar() {
-    print('Tablet $deviceName mengambil gambar dengan kamera $resolusiMP MP');
+  void mengambilFoto() {
+    print('Tablet $nama mengambil foto dengan kamera $megapixel MP');
   }
   
   @override
   void merekamVideo() {
-    print('Tablet $deviceName merekam video dengan lensa $tipeLensa');
+    print('Tablet $nama merekam video dengan lensa $lensa');
   }
   
   @override
-  void telepon(String tujuan) {
-    print('Tablet $deviceName menelepon $tujuan dari nomor $nomorTelp ($operator)');
+  void menelepon(String tujuan) {
+    print('Tablet $nama menelepon $tujuan dari nomor $nomor ($provider)');
   }
   
   @override
-  void kirimPesan(String tujuan, String isiPesan) {
-    print('Tablet $deviceName mengirim pesan ke $tujuan: $isiPesan');
+  void mengirimPesan(String tujuan, String pesan) {
+    print('Tablet $nama mengirim pesan ke $tujuan: $pesan');
   }
   
   void sentuhLayar() {
-    print('Menyentuh layar tablet $deviceName');
+    print('Menyentuh layar tablet $nama');
   }
 }
 
 void main() {
   print('========== SOAL 4 ==========');
   
-  TabletModern tabletModern = TabletModern(
-    deviceName: 'Galaxy Tab S9',
-    brand: 'Samsung',
-    chipset: 'Snapdragon 8 Gen 2',
-    memory: 12,
-    resolusiMP: 13,
-    tipeLensa: 'Ultrawide',
-    nomorTelp: '08987654321',
-    operator: 'Indosat',
+  Tablet tablet = Tablet(
+    nama: 'iPad Pro Edisi 4',
+    merk: 'Apple',
+    processor: 'M6',
+    ram: 16,
+    megapixel: 12,
+    lensa: 'Wide',
+    nomor: '081274863',
+    provider: 'Indosat',
   );
   
-  tabletModern.menyalakan();
-  tabletModern.menjalankanAplikasi('Lightroom');
-  tabletModern.mengambilGambar();
-  tabletModern.merekamVideo();
-  tabletModern.telepon('08987654322');
-  tabletModern.kirimPesan('08987654322', 'Halo dari tablet modern!');
-  tabletModern.sentuhLayar();
-  tabletModern.mematikan();
+  tablet.menyalakan();
+  tablet.menjalankanProgram('Github');
+  tablet.mengambilFoto();
+  tablet.merekamVideo();
+  tablet.menelepon('0812345677');
+  tablet.mengirimPesan('0812345677', 'Halo dari tablet!');
+  tablet.sentuhLayar();
+  tablet.mematikan();
 }
 </pre>
 
@@ -1081,7 +1081,7 @@ void main() {
 // Nim    : 251410031
 // Kelas  : Si2A
         // Soal 5
-class MathHelper {
+class MathUtils {
   static int factorial(int n) {
     if (n < 0) throw ArgumentError('Tidak bisa menghitung faktorial bilangan negatif');
     if (n == 0 || n == 1) return 1;
@@ -1102,7 +1102,7 @@ class MathHelper {
     return true;
   }
   
-  static double roundToDecimals(double value, int decimalPlaces) {
+  static double roundToDecimal(double value, int decimalPlaces) {
     double faktor = 1;
     for (int i = 0; i < decimalPlaces; i++) {
       faktor *= 10;
@@ -1142,18 +1142,18 @@ class MathHelper {
 void main() {
   print('========== SOAL 5 ==========');
   
-  print('Factorial 6: ${MathHelper.factorial(6)}');
-  print('Factorial 8: ${MathHelper.factorial(8)}');
-  print('Apakah 19 prima? ${MathHelper.isPrima(19)}');
-  print('Apakah 21 prima? ${MathHelper.isPrima(21)}');
-  print('2.71828 ke 3 desimal: ${MathHelper.roundToDecimals(2.71828, 3)}');
-  print('Random Int (5-15): ${MathHelper.randomInt(5, 15)}');
-  print('Random Double (0-1): ${MathHelper.randomDouble(0, 1)}');
+  print('Factorial 6: ${MathUtils.factorial(6)}');
+  print('Factorial 4: ${MathUtils.factorial(4)}');
+  print('Apakah 13 prima? ${MathUtils.isPrima(13)}');
+  print('Apakah 24 prima? ${MathUtils.isPrima(24)}');
+  print('2.71828 ke 3 desimal: ${MathUtils.roundToDecimal(2.71828, 3)}');
+  print('Random Int (5-15): ${MathUtils.randomInt(5, 15)}');
+  print('Random Double (2-5): ${MathUtils.randomDouble(2, 5)}');
   
-  List<double> angkaList = [65, 80, 95, 70, 85, 100];
-  print('List angka: $angkaList');
-  print('Rata-rata: ${MathHelper.rataRata(angkaList)}');
-  print('Median: ${MathHelper.median(angkaList)}');
+  List<double> nilai = [60, 75, 88, 92, 77, 83, 69];
+  print('List nilai: $nilai');
+  print('Rata-rata: ${MathUtils.rataRata(nilai)}');
+  print('Median: ${MathUtils.median(nilai)}');
 }
       </pre>
       <button class="btn" onclick="openModal('b362d4104e7b14f54e93ecaf545f854e')">
@@ -1168,53 +1168,57 @@ void main() {
 // Nim    : 251410031
 // Kelas  : SI2A
 
+// Nama   : Azriel Miracle Yuandre
+// Nim    : 251410024
+// Kelas  : SI2A
+
 // ==================== ABSTRACT CLASS ====================
-abstract class MusicPlayer {
-  String judul;
-  int durasi;
+abstract class MediaPlayer {
+  String title;
+  int duration;
   
-  MusicPlayer(this.judul, this.durasi);
+  MediaPlayer(this.title, this.duration);
   
   void play();
   void stop();
   void showInfo();
   
   void displayDuration() {
-    int menit = durasi ~/ 60;
-    int detik = durasi % 60;
+    int menit = duration ~/ 60;
+    int detik = duration % 60;
     print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
   }
 }
 
 // ==================== INTERFACES ====================
-abstract interface class PlayableContent {
+abstract interface class Playable {
   void play();
   void resume();
 }
 
-abstract interface class PausableContent {
+abstract interface class Pausable {
   void pause();
   void resumeFromPause();
 }
 
 // ==================== CLASS IMPLEMENTASI ====================
-class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
+class AudioPlayer implements MediaPlayer, Playable, Pausable {
   @override
-  String judul;
+  String title;
   
   @override
-  int durasi;
+  int duration;
   
-  String formatAudioTrack;
-  int kbps;
+  String formatAudio;
+  int bitrate;
   bool isPlaying = false;
   bool isPaused = false;
   
-  AudioTrack({
-    required this.judul,
-    required this.durasi,
-    required this.formatAudioTrack,
-    required this.kbps,
+  AudioPlayer({
+    required this.title,
+    required this.duration,
+    required this.formatAudio,
+    required this.bitrate,
   });
   
   @override
@@ -1224,7 +1228,7 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
     } else {
       isPlaying = true;
       isPaused = false;
-      print('🎵 Memutar audio: $judul ($formatAudioTrack, ${kbps}kbps)');
+      print('🎵 Memutar audio: $title ($formatAudio, ${bitrate}kbps)');
     }
   }
   
@@ -1233,7 +1237,7 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPaused) {
       isPlaying = true;
       isPaused = false;
-      print('🎵 Melanjutkan audio: $judul');
+      print('🎵 Melanjutkan audio: $title');
     }
   }
   
@@ -1241,7 +1245,7 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
   void stop() {
     isPlaying = false;
     isPaused = false;
-    print('⏹️ Menghentikan audio: $judul');
+    print('⏹️ Menghentikan audio: $title');
   }
   
   @override
@@ -1249,7 +1253,7 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPlaying) {
       isPlaying = false;
       isPaused = true;
-      print('⏸️ Menjeda audio: $judul');
+      print('⏸️ Menjeda audio: $title');
     }
   }
   
@@ -1258,18 +1262,18 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPaused) {
       isPlaying = true;
       isPaused = false;
-      print('▶️ Melanjutkan audio dari jeda: $judul');
+      print('▶️ Melanjutkan audio dari jeda: $title');
     }
   }
   
   @override
   void showInfo() {
     print('═══════════════════════════════');
-    print('📻 AUDIO TRACK');
+    print('📻 AUDIO PLAYER');
     print('═══════════════════════════════');
-    print('Judul: $judul');
-    print('Format: $formatAudioTrack');
-    print('Kualitas: ${kbps}kbps');
+    print('Judul: $title');
+    print('Format: $formatAudio');
+    print('Bitrate: ${bitrate}kbps');
     displayDuration();
     print('Status: ${isPlaying ? "Playing" : (isPaused ? "Paused" : "Stopped")}');
     print('═══════════════════════════════');
@@ -1277,8 +1281,8 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
   
   @override
   void displayDuration() {
-    int menit = durasi ~/ 60;
-    int detik = durasi % 60;
+    int menit = duration ~/ 60;
+    int detik = duration % 60;
     print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
   }
   
@@ -1286,29 +1290,29 @@ class AudioTrack implements MusicPlayer, PlayableContent, PausableContent {
     print('🔊 Mengatur volume ke $volume%');
   }
   
-  void setEqualizerMode(String mode) {
+  void setEqualizer(String mode) {
     print('🎚️ Mengatur equalizer ke mode: $mode');
   }
 }
 
-class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
+class VideoPlayer implements MediaPlayer, Playable, Pausable {
   @override
-  String judul;
+  String title;
   
   @override
-  int durasi;
+  int duration;
   
-  String resolusiLayar;
-  String formatVideoTrack;
+  String resolusi;
+  String formatVideo;
   bool isPlaying = false;
   bool isPaused = false;
   int currentTime = 0;
   
-  VideoTrack({
-    required this.judul,
-    required this.durasi,
-    required this.resolusiLayar,
-    required this.formatVideoTrack,
+  VideoPlayer({
+    required this.title,
+    required this.duration,
+    required this.resolusi,
+    required this.formatVideo,
   });
   
   @override
@@ -1318,7 +1322,7 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
     } else {
       isPlaying = true;
       isPaused = false;
-      print('🎬 Memutar video: $judul ($resolusiLayar, $formatVideoTrack)');
+      print('🎬 Memutar video: $title ($resolusi, $formatVideo)');
     }
   }
   
@@ -1327,7 +1331,7 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPaused) {
       isPlaying = true;
       isPaused = false;
-      print('🎬 Melanjutkan video: $judul');
+      print('🎬 Melanjutkan video: $title');
     }
   }
   
@@ -1336,7 +1340,7 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
     isPlaying = false;
     isPaused = false;
     currentTime = 0;
-    print('⏹️ Menghentikan video: $judul');
+    print('⏹️ Menghentikan video: $title');
   }
   
   @override
@@ -1344,7 +1348,7 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPlaying) {
       isPlaying = false;
       isPaused = true;
-      print('⏸️ Menjeda video: $judul');
+      print('⏸️ Menjeda video: $title');
     }
   }
   
@@ -1353,18 +1357,18 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
     if (isPaused) {
       isPlaying = true;
       isPaused = false;
-      print('▶️ Melanjutkan video dari jeda: $judul');
+      print('▶️ Melanjutkan video dari jeda: $title');
     }
   }
   
   @override
   void showInfo() {
     print('═══════════════════════════════');
-    print('📺 VIDEO TRACK');
+    print('📺 VIDEO PLAYER');
     print('═══════════════════════════════');
-    print('Judul: $judul');
-    print('Resolusi: $resolusiLayar');
-    print('Format: $formatVideoTrack');
+    print('Judul: $title');
+    print('Resolusi: $resolusi');
+    print('Format: $formatVideo');
     displayDuration();
     print('Status: ${isPlaying ? "Playing" : (isPaused ? "Paused" : "Stopped")}');
     print('═══════════════════════════════');
@@ -1372,27 +1376,27 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
   
   @override
   void displayDuration() {
-    int menit = durasi ~/ 60;
-    int detik = durasi % 60;
+    int menit = duration ~/ 60;
+    int detik = duration % 60;
     print('Durasi: ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
   }
   
-  void setQuality(String kualitas) {
-    print('📺 Mengubah kualitas video ke: $kualitas');
+  void setQuality(String quality) {
+    print('📺 Mengubah kualitas video ke: $quality');
   }
   
-  void seekTo(int detik) {
-    if (detik >= 0 && detik <= durasi) {
-      currentTime = detik;
-      int menit = detik ~/ 60;
-      int second = detik % 60;
-      print('⏩ Lompat ke ${menit.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}');
+  void seekTo(int seconds) {
+    if (seconds >= 0 && seconds <= duration) {
+      currentTime = seconds;
+      int menit = seconds ~/ 60;
+      int detik = seconds % 60;
+      print('⏩ Lompat ke ${menit.toString().padLeft(2, '0')}:${detik.toString().padLeft(2, '0')}');
     } else {
       print('❌ Waktu tidak valid!');
     }
   }
   
-  void fullscreenMode() {
+  void fullscreen() {
     print('🖥️ Mode layar penuh aktif');
   }
 }
@@ -1400,78 +1404,78 @@ class VideoTrack implements MusicPlayer, PlayableContent, PausableContent {
 // ==================== MAIN PROGRAM ====================
 void main() {
   print('═══════════════════════════════════════════════════════');
-  print('        MUSIC PLAYER SYSTEM DEMONSTRATION');
+  print('        MEDIA PLAYER SYSTEM DEMONSTRATION');
   print('═══════════════════════════════════════════════════════\n');
   
-  AudioTrack audioTrack = AudioTrack(
-    judul: 'Yesterday - The Beatles',
-    durasi: 125,
-    formatAudioTrack: 'FLAC',
-    kbps: 1411,
+  AudioPlayer audio = AudioPlayer(
+    title: 'Yesterday - The Beatles',
+    duration: 183,
+    formatAudio: 'MP3',
+    bitrate: 320,
   );
   
-  VideoTrack videoTrack = VideoTrack(
-    judul: 'The Dark Knight Scene',
-    durasi: 480,
-    resolusiLayar: '1920x1080',
-    formatVideoTrack: 'MKV',
+  VideoPlayer video = VideoPlayer(
+    title: 'The Dark Knight Chase Scene',
+    duration: 420,
+    resolusi: '1920x1080',
+    formatVideo: 'MP4',
   );
   
   print('══════════════ AUDIO PLAYER DEMO ══════════════\n');
-  audioTrack.showInfo();
+  audio.showInfo();
   print('');
-  audioTrack.play();
-  audioTrack.pause();
-  audioTrack.resumeFromPause();
-  audioTrack.setVolume(60);
-  audioTrack.setEqualizerMode('Jazz');
-  audioTrack.stop();
+  audio.play();
+  audio.pause();
+  audio.resumeFromPause();
+  audio.setVolume(75);
+  audio.setEqualizer('Rock');
+  audio.stop();
   print('');
   
   print('══════════════ VIDEO PLAYER DEMO ══════════════\n');
-  videoTrack.showInfo();
+  video.showInfo();
   print('');
-  videoTrack.play();
-  videoTrack.pause();
-  videoTrack.resumeFromPause();
-  videoTrack.seekTo(180);
-  videoTrack.setQuality('HD');
-  videoTrack.fullscreenMode();
-  videoTrack.stop();
+  video.play();
+  video.pause();
+  video.resumeFromPause();
+  video.seekTo(120);
+  video.setQuality('4K');
+  video.fullscreen();
+  video.stop();
   print('');
   
   print('══════════ POLIMORFISME DEMO ══════════════════\n');
   
-  List<MusicPlayer> daftarMedia = [
-    AudioTrack(
-      judul: 'Stairway to Heaven',
-      durasi: 482,
-      formatAudioTrack: 'WAV',
-      kbps: 2116,
+  List<MediaPlayer> daftarMedia = [
+    AudioPlayer(
+      title: 'Hotel California',
+      duration: 355,
+      formatAudio: 'FLAC',
+      bitrate: 1411,
     ),
-    VideoTrack(
-      judul: 'Avengers Trailer',
-      durasi: 150,
-      resolusiLayar: '3840x2160',
-      formatVideoTrack: 'MP4',
+    VideoPlayer(
+      title: 'The Matrix Bullet Time',
+      duration: 180,
+      resolusi: '3840x2160',
+      formatVideo: 'MKV',
     ),
-    AudioTrack(
-      judul: 'Rolling in the Deep',
-      durasi: 218,
-      formatAudioTrack: 'AAC',
-      kbps: 320,
+    AudioPlayer(
+      title: 'Rolling in the Deep',
+      duration: 228,
+      formatAudio: 'AAC',
+      bitrate: 256,
     ),
   ];
   
   for (var media in daftarMedia) {
-    print('Memutar: ${media.judul}');
+    print('Memutar: ${media.title}');
     media.displayDuration();
     print('---');
   }
   
   print('\n══════════ INTERFACE DEMO ══════════════════════\n');
   
-  List<PlayableContent> playableList = [audioTrack, videoTrack];
+  List<Playable> playableList = [audio, video];
   
   for (var item in playableList) {
     print('Memulai pemutaran...');
@@ -1481,7 +1485,7 @@ void main() {
   
   print('══════════ PAUSABLE DEMO ══════════════════════\n');
   
-  List<PausableContent> pausableList = [audioTrack, videoTrack];
+  List<Pausable> pausableList = [audio, video];
   
   for (var item in pausableList) {
     print('Menjeda pemutaran...');
